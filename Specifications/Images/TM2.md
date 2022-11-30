@@ -1,6 +1,5 @@
-*------------------------------------------------------------------------------------------------*
 File Specification:		Sony Texture Image Version 2 (TIM2)
-
+------------------------------------------------------------------------------------------------
 Extension:			.tm2/.TM2
 
 Purpose:			contains formatted image data used by the Playstation 2.
@@ -11,44 +10,47 @@ Author Date:			2000
 
 Applications:			Dark Cloud 1, Dark Cloud 2, Playstation 2 Games
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
 Disclaimer:				This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 	
-	There are more comprehensive specs out there(see references). It's written from the perspective of extracting 
+There are more comprehensive specs out there(see references). It's written from the perspective of extracting 
 	and converting TIM2Images to other image formats. This is not an explanation of how the image functions with 
 	respect to the original hardware. It is also not a explanation of how to convert other image formats to TIM2.
 	
-External References:	https://github.com/marco-calautti/Rainbow/
-						https://wiki.xentax.com/index.php/TM2_TIM2_Image
+External References:	
+https://github.com/marco-calautti/Rainbow/
+https://wiki.xentax.com/index.php/TM2_TIM2_Image
 
-*------------------------------------------------------------------------------------------------*
-
-Purpose(expanded):		The TIM2 image format is a standard image format used by the Sony Playstation 2 and PSP systems. It is a heavily
+Purpose(expanded):		
+------------------------------------------------------------------------------------------------
+	The TIM2 image format is a standard image format used by the Sony Playstation 2 and PSP systems. It is a heavily
 	modified bitmap format that supports alpha transparency, mipmapping, and paletting.
 	
-	Image data contained within a TIM2Image can support 4-bit Indexed/Paletted Color, 8-bit Indexed/Paletted Color, 16-bit ABGR1555 True Color,
-	24-bit RGB True Color, and 32-bit RGBA True Color. The palette data can support 16-bit ABGR1555 True Color, 24-bit RGB True Color, and 32-bit RGBA 
-	True Color. This palette data can be linear or interlaced. 
+	Image data contained within a TIM2Image can support 4-bit Indexed/Paletted Color, 8-bit Indexed/Paletted Color, 
+	16-bit ABGR1555 True Color, 24-bit RGB True Color, and 32-bit RGBA True Color. The palette data can support 
+	16-bitABGR1555 True Color, 24-bit RGB True Color, and 32-bit RGBA True Color. This palette data can be linear 
+	or interlaced. 
 	
-	Both image data and palette data are swizzled, meaning they have been reorganized into blocks instead of horizontal lines to more efficiently be 
-	read by the Playstation 2's graphics system. They must be unswizzled in order to restore them to their original horizontal line layout. The
-	algorithm for unswizzling will be listed below in the implementation section.
+	Both image data and palette data are swizzled, meaning they have been reorganized into blocks instead of horizontal 
+	lines to more efficiently be read by the Playstation 2's graphics system. They must be unswizzled in order 
+	to restore them to their original horizontal line layout. The algorithm for unswizzling will be listed below in 
+	the implementation section.
 	
-	The TIM2 image begins with a TIM2Header, which contains general information about the file, and is denoted by its magic value TIM2 (0x54494D32).
-	The TIM2Header is 16 bytes in size. It starts with a 4-byte magic value, then a 1-byte version number, a 1-byte format number, a 2-byte imageCount, 
-	and 8 bytes of unknown padding.
+	The TIM2 image begins with a TIM2Header, which contains general information about the file, and is denoted by 
+	its magic value TIM2 (0x54494D32). The TIM2Header is 16 bytes in size. It starts with a 4-byte magic value, 
+	then a 1-byte version number, a 1-byte format number, a 2-byte imageCount, and 8 bytes of unknown padding.
 	
-	Following the TIM2Header is the image information section. It begins with a list of various sizes and flags, which are too numerous to describe in
-	this section. See the File Layout below for a verbose structure. After the information section is an array of image bytes. Finally, an array of
-	palette bytes if there is a palette present in the image.
-	
-*------------------------------------------------------------------------------------------------*
+	Following the TIM2Header is the image information section. It begins with a list of various sizes and flags,
+	which are too numerous to describe in this section. See the File Layout below for a verbose structure. 
+	After the information section is an array of image bytes. Finally, an array ofpalette bytes if there is a 
+	palette present in the image.
 
 File Layout:
 ---------------------------
+```cs
 int32 == 4 byte integer
 short16 == 2 byte short integer
 eof == end of file
@@ -57,39 +59,38 @@ long64 == 8 byte long integer
 TIM2
 {
 	TIM2Header(16 bytes)
-		int32 magic;                   			//The magic number that denotes the file type, TIM2.
-		byte version;                			//The version of this TIM image.
-		byte format;                 			//Usually 0.
-		short16 pictureCount;          			//The number of pictures stored in this TIM2.
-		int32 padding1;							//Padding
-		int32 padding2;							//Padding
-	TIM2Picture[pictureCount] pictures;		//The list of pictures held by the image.
+		int32 magic;                   		//The magic number that denotes the file type, TIM2.
+		byte version;                		//The version of this TIM image.
+		byte format;                 		//Usually 0.
+		short16 pictureCount;          		//The number of pictures stored in this TIM2.
+		int32 padding1;				//Padding
+		int32 padding2;				//Padding
+	TIM2Picture[pictureCount] pictures;	//The list of pictures held by the image.
 		int32 totalSize;                       	//The total size of the image AFTER it's been unpacked.
-        int32 paletteSize;                     	//The size of the palette section in bytes.
-        int32 imageDataSize;                   	//The size of the image section in bytes.
-        short16 headerSize;                    	//The size of this header.
-        short16 colorEntries;                  	//The number of color entries in the image.
-        byte imageFormat;                    	//The image format, presumably for the PS2 graphics engine.
-        byte mipmapCount;                    	//The number of mipmaps in this image.
-        byte CLUTFormat;                     	//Unknown
-        byte bitsPerPixel;                   	//The number of bits per pixel in the image buffer. These are generally multiples of 4.
-        short16 imageWidth;                    	//The width of this image.
-        short16 imageHeight;                   	//The height of this image.
-        long64 gsTEX0;                         	//Unknown 
-        long64 gsTEX1;                         	//Unknown 
-        int32 gsRegs;                          	//Unknown
-        int32 gsTexClut;                       	//Unknown
-        byte[headerSize - 48] userData;       	//Game-specific developer data.
-        byte[imageDataSize] imageBytes;     	//The buffer of image data in a paletted/swizzled format that needs to be converted.
-        byte[paletteSize] paletteBytes;   		//The buffer of palette pixels used for indexing the image bytes. It is in a paletted/swizzled format that needs to be converted.
+        	int32 paletteSize;                     	//The size of the palette section in bytes.
+        	int32 imageDataSize;                   	//The size of the image section in bytes.
+        	short16 headerSize;                    	//The size of this header.
+        	short16 colorEntries;                  	//The number of color entries in the image.
+        	byte imageFormat;                    	//The image format, presumably for the PS2 graphics engine.
+        	byte mipmapCount;                    	//The number of mipmaps in this image.
+        	byte CLUTFormat;                     	//Unknown
+        	byte bitsPerPixel;                   	//The number of bits per pixel in the image buffer. These are generally multiples of 4.
+        	short16 imageWidth;                    	//The width of this image.
+        	short16 imageHeight;                   	//The height of this image.
+        	long64 gsTEX0;                         	//Unknown 
+        	long64 gsTEX1;                         	//Unknown 
+        	int32 gsRegs;                          	//Unknown
+        	int32 gsTexClut;                       	//Unknown
+        	byte[headerSize - 48] userData;       	//Game-specific developer data.
+        	byte[imageDataSize] imageBytes;     	//The buffer of image data in a paletted/swizzled format that needs to be converted.
+        	byte[paletteSize] paletteBytes;   	//The buffer of palette pixels used for indexing the image bytes. It is in a paletted/swizzled format that needs to be converted.
 	eof
 }
-
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
-
+```cs
 //The Magic for the TIM2.
 const int32 TIM2Magic = 0x54494D32;
 
@@ -128,8 +129,8 @@ struct TIM2Picture
 	
 	//calculated data. Not necessary, but handy to have.
 	bool isLinearPalette;		//Refers to whether or not the palette data is linear or interleaved/interlaced.
-	int colorSize;				//How many bits in size an individual entry in the imageBytes is.
-	int userDataSize;			//The size of the user data section.
+	int colorSize;			//How many bits in size an individual entry in the imageBytes is.
+	int userDataSize;		//The size of the user data section.
 }
 
 //The TIM2Image file.
@@ -240,11 +241,11 @@ TIM2Image LoadTIM2Image(string szTIM2ImageFilePath)
 	//Return our result.
 	return tImage;
 }
-
+```
 
 Palette Conversion
 ---------------------------
-
+```cs
 //Generic color data.
 struct Color
 {
@@ -407,11 +408,11 @@ Color[] ConvertPicturePaletteToRGBA(TIM2Picture tPicture)
 	}
 	return tPalette;
 }
-
+```
 
 Image Data Conversion
 ---------------------------
-
+```cs
 //Unpacks the 4-bit byte stream into a 8-bit byte stream.
 byte[] Unpack4Bit(byte[] buffer, int width, int height)
 {
@@ -596,3 +597,4 @@ Color[] ConvertPictureImageDataToRGBA(TIM2Picture tPicture)
 }
 
 //At this point, you should have enough true color information to convert this to other formats like bmp, targa, png, etc.
+```
