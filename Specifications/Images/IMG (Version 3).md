@@ -59,10 +59,10 @@ eof == end of file
 IM3
 {
 	Image3Header(16 bytes)
-        int32 magic;                       	//The magic numbers denoting the version of this IMG file.
-        int32 firstHeaderOffset;           	//The offset to the first tim2image header in the file.
-        int32 imageCount;                 	//The number of images stored in the IMG file.
-        int32 padding;                    	//always 0.
+        	int32 magic;                       	//The magic numbers denoting the version of this IMG file.
+        	int32 firstHeaderOffset;           	//The offset to the first tim2image header in the file.
+        	int32 imageCount;                 	//The number of images stored in the IMG file.
+        	int32 padding;                    	//always 0.
 	Image3SubHeader(64 bytes)[imageCount]
 		char[32] name;                     	//The name of this image. Always 32 bytes long, with null terminators.
 		int32 headerSize;                	//The size of this ImageHeader, Always 64.
