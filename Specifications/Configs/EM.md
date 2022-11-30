@@ -17,9 +17,8 @@ Disclaimer:				This format is speculative. Only the original author knows the ex
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-------------------------------------------------------------------------------------------------
-
 Purpose(expanded):
+------------------------------------------------------------------------------------------------
 
 	This is a configuration file that appears to drive some sort of effect, perhaps particle
 	based. One could infer some of the functionality based on the command names.
