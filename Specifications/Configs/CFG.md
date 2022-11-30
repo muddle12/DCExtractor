@@ -17,9 +17,8 @@ Disclaimer:				This format is speculative. Only the original author knows the ex
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-------------------------------------------------------------------------------------------------
-
 Purpose(expanded):
+------------------------------------------------------------------------------------------------
 
 	This is a configuration file for specifying commands and settings that relate to the MDS,
 	MOT, and WGT files. There are also other commands that are relevant to the Level-5 game engine, but those are
