@@ -58,10 +58,10 @@ eof == end of file
 IM2
 {
 	Image2Header(16 bytes)
-        int32 magic;                       	//The magic numbers denoting the version of this IMG file.
-        int32 imageCount;           		//The number of images stored in the IMG file.
-        int32 padding1;                 	//always 0.
-        int32 padding2;                    	//always 0.
+        	int32 magic;                       	//The magic numbers denoting the version of this IMG file.
+        	int32 imageCount;           		//The number of images stored in the IMG file.
+        	int32 padding1;                 	//always 0.
+        	int32 padding2;                    	//always 0.
 	Image2SubHeader(48 bytes)[imageCount]
 		char[32] name;                     	//The name of this image. Always 32 bytes long, with null terminators.
 		int32 imageOffset;                	//The offset to the TIM2Image data.
