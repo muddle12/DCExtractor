@@ -1,6 +1,5 @@
-*------------------------------------------------------------------------------------------------*
-
 File Specification:		Level-5 Bind Pose Position
+------------------------------------------------------------------------------------------------
 
 Extension:			.bbp/.BBP
 
@@ -12,15 +11,16 @@ Author Date:			2000
 
 Applications:			Dark Cloud 1, Dark Cloud 2
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
-Disclaimer:				This format is speculative. Only the original author knows the exact specification.
+Disclaimer:			This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-*------------------------------------------------------------------------------------------------*
+Purpose(expanded):
+------------------------------------------------------------------------------------------------
 
-Purpose(expanded):		This is a child format of the MDS format. If you are unfamiliar with the MDS format, I would 
+	This is a child format of the MDS format. If you are unfamiliar with the MDS format, I would 
 	recommend reading the MDS specification first before reading the BBP specification.
 
 	The BBP, or Bind Pose Position, is a separate file that accompanies the MDS file. This file requires
@@ -59,11 +59,10 @@ Purpose(expanded):		This is a child format of the MDS format. If you are unfamil
 	On that note, the MDS skeletal system and the animation system are still only partially understood. I suspect
 	the answer lies in the BBP file and its unused data, but I have been unable to make any more headway in this
 	area. Anyone else following up on this specification will likely have to look to the BBP for future answers.
-	
-*------------------------------------------------------------------------------------------------*
 
 File Layout:
 ---------------------------
+```cs
 float32 == 4 byte floating point single
 eof == end of file
 
@@ -77,12 +76,11 @@ BBP
 	Matrix4x4(64 bytes)
 	eof
 }
-	
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
-
+```cs
 //A 4x4 matrix.
 struct Matrix4x4
 {
@@ -155,33 +153,4 @@ void TransformMeshVerticesByBindMatrix(reference Vector4[] vertices, Matrix4x4 b
 		vertices[vert] = transformedVert;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
