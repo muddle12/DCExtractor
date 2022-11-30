@@ -1,5 +1,5 @@
-*------------------------------------------------------------------------------------------------*
 File Specification:		Level-5 Image3(IM3) Archive
+------------------------------------------------------------------------------------------------
 
 Extension:			.img/.IMG
 
@@ -12,15 +12,16 @@ Author Date:			2000
 
 Applications:			Dark Cloud 2
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
 Disclaimer:				This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-*------------------------------------------------------------------------------------------------*
+Purpose(expanded):
+------------------------------------------------------------------------------------------------
 
-Purpose(expanded):		The Image3 archive is an off-shoot of the PAK/package format, specifically tailored to hold 
+	The Image3 archive is an off-shoot of the PAK/package format, specifically tailored to hold 
 	TIM2Image files. TIM2Images are the native image format used by the Playstation 2. TIM2Images are not exclusive
 	to the Image3 archive, and do not need to be stored in an Image3 archive in order to be utilized. They can be
 	stand-alone and loaded individually by the game engine.
@@ -37,19 +38,18 @@ Purpose(expanded):		The Image3 archive is an off-shoot of the PAK/package format
 	These subheaders are sequential, matching the order of the TIM2Images being stored. The first subheader corresponds to
 	the first TIM2Image, the second subheader corresponds to the second TIM2Image, etc.
 	
-	After the last subheader is the first of one or more TIM2Images up to imageCount. These are stored in their entirity, header and all.
-	The TIM2Image is described more in the TIM2Image specification (TM2.txt).
+	After the last subheader is the first of one or more TIM2Images up to imageCount. These are stored in their entirity, 
+	header and all. The TIM2Image is described more in the TIM2Image specification (TM2.txt).
 	
 	You can extract these TIM2Images from the Image3 archive directly into a new file by simply copying everything starting
 	at the beginning of the TIM2ImageHeader to imageSize.
 	
 	Technically, you don't even need an external tool to do this. Using a simple text editor or hex editor, you can extract
 	the TIM2s from the archive manually directly into a new file and they should work.
-	
-*------------------------------------------------------------------------------------------------*
 
 File Layout:
 ---------------------------
+```cs
 int32 == 4 byte integer
 long64 = 8 byte integer
 char == 1 byte ASCII character
@@ -77,12 +77,11 @@ IM3
 		(see TM2.txt spec for more info)
 	eof
 }
-
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
-
+```cs
 //IM3 magic.
 const int32 IM3Magic = 0x494D3300;
 
@@ -98,7 +97,7 @@ struct IM3Header
 //Sub headers which describe the TIM2Images packed in the file.
 struct IMG3SubHeader
 {
-	string name;                    //The name of this image. Always 32 bytes long, with null terminators.
+	string name;                    	//The name of this image. Always 32 bytes long, with null terminators.
 	int32 headerSize;        		//The size of this ImageHeader, Always 64.
 	int32 imageChunkSize;      		//The size of the image chunk in this tim2image.
 	int32 unknown5;            		//Unknown, always 1
@@ -176,3 +175,4 @@ void ExtractIMG3(string szIMGFilePath)
 	//Close the input stream.
 	input.Close();
 }
+```
