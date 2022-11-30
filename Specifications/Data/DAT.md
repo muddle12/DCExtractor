@@ -1,6 +1,5 @@
----------------
-
 File Specification:		Level-5 Data
+---------------
 
 Extension:			.dat/.DAT
 
@@ -18,7 +17,6 @@ Disclaimer:				This format is speculative. Only the original author knows the ex
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
----------------
 Purpose(expanded):
 ---------------
 	DAT files contain all of the assets used by both Dark Cloud and Dark Cloud 2.
@@ -38,8 +36,6 @@ Purpose(expanded):
 	
 	You only need one file system, either HD2 or HD3. I do not know why both file systems are
 	included with the DAT. They both contain identical data, in slightly different formats.
-
----------------
 
 File Layout:
 ---------------------------
