@@ -1,5 +1,5 @@
-*------------------------------------------------------------------------------------------------*
 File Specification:		Level-5 Bank Config
+------------------------------------------------------------------------------------------------
 
 Extension(s):			.bak/.BAK
 
@@ -17,9 +17,9 @@ Disclaimer:				This format is speculative. Only the original author knows the ex
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-*------------------------------------------------------------------------------------------------*
+------------------------------------------------------------------------------------------------
 
-Purpose(expanded):		This is a configuration file that contains a list of ascii strings. These can be file paths, or names, or commands. 
+Purpose(expanded):		
+
+	This is a configuration file that contains a list of ascii strings. These can be file paths, or names, or commands. 
 	There is no discernable pattern to the data held in this file type. It appears to be an all-purpose format.
-	
-*------------------------------------------------------------------------------------------------*
