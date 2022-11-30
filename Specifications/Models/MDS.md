@@ -1,6 +1,5 @@
-*------------------------------------------------------------------------------------------------*
-
 File Specification:		Level-5 Model
+------------------------------------------------------------------------------------------------
 
 Extension:			.mds/.MDS
 
@@ -12,7 +11,7 @@ Author Date:			2000
 
 Applications:			Dark Cloud 1, Dark Cloud 2
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
 Disclaimer:				This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
@@ -21,9 +20,10 @@ Disclaimer:				This format is speculative. Only the original author knows the ex
 External References:	https://github.com/ps2dev/ps2gl/blob/master/include/GL/gl.h
 
 
-*------------------------------------------------------------------------------------------------*
+Purpose(expanded):
+------------------------------------------------------------------------------------------------
 
-Purpose(expanded):		The MDS format is a container for 3D model data with a skeletal hierarchy. It contains
+	The MDS format is a container for 3D model data with a skeletal hierarchy. It contains
 	3D vertex information, 3D normal information, 2D texture coordinate information, floating point vertex color 
 	information, surface material information, a variable-size index data section, and a skeletal hierarchy using 4x4 
 	matrices as local transformations relative to each bone's parent bone.
@@ -118,9 +118,9 @@ Purpose(expanded):		The MDS format is a container for 3D model data with a skele
 	OpenGL Primitive Flags used by the Sony Playstation 2's modified OpenGL implementation. See the External References 
 	section above for more information. The triangleStripStyle has three common values: GL_TRIANGLES(0x0003), 
 	GL_TRIANGLE_STRIP(0x0004), and a third custom style implemented by the developer, which I will refer to 
-	as DC_COLLISION_TRIANGLES(0x0013). There are a variety of other values possible for the triangleStripStyle, but they are currently
-	not understood, and are rarely encountered. Due to their cryptic nature, and how they override the triangleStripType
-	value, I thought it better to simply avoid meshes that uses these obscure styles.
+	as DC_COLLISION_TRIANGLES(0x0013). There are a variety of other values possible for the triangleStripStyle, but they are 
+	currently not understood, and are rarely encountered. Due to their cryptic nature, and how they override the 
+	triangleStripType value, I thought it better to simply avoid meshes that uses these obscure styles.
 	
 	The next byte is triangleStripType, which describes how many integers per index are held in the following indices. There are
 	four permuntations: VertexNormalUV(0x0), VertexNormalUVColor(0x1), VertexNormal(0x2), and Vertex(0x3). As is implied by
@@ -178,11 +178,9 @@ Purpose(expanded):		The MDS format is a container for 3D model data with a skele
 	a container for a mesh. It is unclear if mesh container bones also inhabit the skeletal hierarchy, or if they
 	are culled entirely.
 	
-	
-*------------------------------------------------------------------------------------------------*
-	
 File Layout:
 ---------------------------
+```cs
 int32 == 4 byte integer
 short16 == 2 byte short integer
 float32 == 4 byte floating point single
@@ -194,9 +192,9 @@ MDS
 {
 	MDSHeader(16 bytes)
 		int32 header;             	//The 0x4D445300 MDS0 header marker.
-        int32 version;             	//The version number. Always 1.
-        int32 boneCount;           	//The number of bones following the initial MDS header.
-        int32 boneOffset;          	//The offset from Offset to the bone section.
+        	int32 version;             	//The version number. Always 1.
+        	int32 boneCount;           	//The number of bones following the initial MDS header.
+        	int32 boneOffset;          	//The offset from Offset to the bone section.
 	MDSBone(112 bytes)[boneCount]
 		int32 index;				//The index of this bone in the hierarchy.                        
 		int32 size;                 //The size of this header.     
@@ -207,20 +205,20 @@ MDS
 			float32[16] matrices;		//The matrices of this 4x4 matrix.
 	MDTMesh[]						//The mesh data. Unknown number of meshes, search for the header MDT0 to find a mesh.
 		int32 magic;                //Magic MDT0
-        int32 headerSize;           //The size of this header. Always 64 bytes.
-        int32 meshDataSize;         //The size of the MDT section, including all mesh data, starting at the header.
-        int32 vertexCount;          //The number of 16-byte vertices in the vertex section.
-        int32 vertexOffset;         //The offset, starting at the beginning of the MDT header, where the vertex data starts.
-        int32 normalCount;          //The number of 16-byte normals in the vertex section.
-        int32 normalOffset;         //The offset, starting at the beginning of the MDT header, where the normal data starts.
-        int32 colorCount;           //The number of 16-byte colors in the vertex section.
-        int32 colorOffset;          //The offset, starting at the beginning of the MDT header, where the color data starts.
-        int32 polygonBlockSize;     //Due to how the index data can change size and structure depending on its type, this describes how large the index section is in bytes.
-        int32 polygonsOffset;       //The offset, starting at the beginning of the MDT header, where the indx data starts.
-        int32 uvCount;              //The number of 16-byte uvs in the uv section.
-        int32 uvOffset;             //The offset, starting at the beginning of the MDT header, where the uv data starts.
-        int32 materialCount;        //The number of 96-byte materials in material section.
-        int32 materialOffset;       //The offset, starting at the beginning of the MDT header, where the material data starts.
+        	int32 headerSize;           //The size of this header. Always 64 bytes.
+        	int32 meshDataSize;         //The size of the MDT section, including all mesh data, starting at the header.
+        	int32 vertexCount;          //The number of 16-byte vertices in the vertex section.
+        	int32 vertexOffset;         //The offset, starting at the beginning of the MDT header, where the vertex data starts.
+        	int32 normalCount;          //The number of 16-byte normals in the vertex section.
+        	int32 normalOffset;         //The offset, starting at the beginning of the MDT header, where the normal data starts.
+        	int32 colorCount;           //The number of 16-byte colors in the vertex section.
+        	int32 colorOffset;          //The offset, starting at the beginning of the MDT header, where the color data starts.
+        	int32 polygonBlockSize;     //Due to how the index data can change size and structure depending on its type, this describes how large the index section is in bytes.
+        	int32 polygonsOffset;       //The offset, starting at the beginning of the MDT header, where the indx data starts.
+        	int32 uvCount;              //The number of 16-byte uvs in the uv section.
+        	int32 uvOffset;             //The offset, starting at the beginning of the MDT header, where the uv data starts.
+        	int32 materialCount;        //The number of 96-byte materials in material section.
+        	int32 materialOffset;       //The offset, starting at the beginning of the MDT header, where the material data starts.
 		Vector4(16 bytes)[vertexCount] vertices;	//The list of vertices.
 			float32 x;						//The x-component.
 			float32 y;						//The y-component.
@@ -261,22 +259,21 @@ MDS
 						int32 vertexIndex;			//The index of a vertex in the vertices array.
 					}
 		Vector4(16 bytes)[normalCount] normals;		//The list of normals.
-		Vector4(16 bytes)[uvCount] uvs;				//The list of uvs.
-		Vector4(16 bytes)[colorCount] colors;			//The list of colors.
+		Vector4(16 bytes)[uvCount] uvs;			//The list of uvs.
+		Vector4(16 bytes)[colorCount] colors;		//The list of colors.
 		Material(96 bytes)[materialCount] materials;	//The list of materials.
 			Vector4 firstColor;             	//Unknown, I presume this is a diffuse color.
-            Vector4 secondColor;            	//Unknown, possibly a specular or ambinet color.
-            Vector4 thirdColor;             	//Unknown, possibly a specular or ambient color.
-            float32 unknown1;                 	//Unknown, potentially glossiness/roughness.
-            char[44] name;                  	//The name of the texture this material uses.
+            		Vector4 secondColor;            	//Unknown, possibly a specular or ambinet color.
+            		Vector4 thirdColor;             	//Unknown, possibly a specular or ambient color.
+            		float32 unknown1;                 	//Unknown, potentially glossiness/roughness.
+            		char[44] name;                  	//The name of the texture this material uses.
 	eof
 }
-
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
-
+```cs
 //MDS magic.
 const int32 MDSMagic = 0x4D445300;
 
@@ -284,15 +281,15 @@ const int32 MDSMagic = 0x4D445300;
 const int32 MDTMagic = 0x4D445400;
 
 //indexStyles.
-const byte GL_TRIANGLES = (byte)0x0003
-const byte GL_TRIANGLE_STRIP = (byte)0x0004
-const byte DC2_COLLISION_TRIANGLES = (byte)0x0013
+const byte GL_TRIANGLES = (byte)0x0003;
+const byte GL_TRIANGLE_STRIP = (byte)0x0004;
+const byte DC2_COLLISION_TRIANGLES = (byte)0x0013;
 
 //indexTypes.
-const byte TYPE_VERTEXNORMALUV = 0X0;
+const byte TYPE_VERTEXNORMALUV = 0x0;
 const byte TYPE_VERTEXNORMALUVCOLOR = 0x1;
-const byte TYPE_VERTEXNORMAL = 0X2;
-const byte TYPE_VERTEX = 0X3;
+const byte TYPE_VERTEXNORMAL = 0x2;
+const byte TYPE_VERTEX = 0x3;
 
 
 //A 4x4 matrix.
@@ -318,34 +315,34 @@ struct MDSBone
 	string name;                    //The name of the bone.
 	int32 associatedMDTOffset;      //The mesh that this bone's bind pose is associated with.
 	int32 parentIndex;              //The index of the parent bone.
-	Matrix4x4 local;   				//The local transformation matrix.
-	//Optional: Matrix4x4 bind;   	//The bind transformation matrix. See BBP specification.
+	Matrix4x4 local;   		//The local transformation matrix.
+	//Matrix4x4 bind;   		//Optional: The bind transformation matrix. See BBP specification.
 }
 
 //A material used by the MDS triangles.
 struct MDSMaterial
 {
-    Vector4 firstColor;             //Unknown, I presume this is a diffuse color.
-    Vector4 secondColor;            //Unknown, possibly a specular or ambinet color.
-    Vector4 thirdColor;             //Unknown, possibly a specular or ambient color.
-    float32 unknown1;               //Unknown, potentially glossiness/roughness.
-    string name;                    //The name of the material, which matches the corresponding texture associated with this material. This section is 44 bytes long.
+	Vector4 firstColor;             //Unknown, I presume this is a diffuse color.
+	Vector4 secondColor;            //Unknown, possibly a specular or ambinet color.
+	Vector4 thirdColor;             //Unknown, possibly a specular or ambient color.
+	float32 unknown1;               //Unknown, potentially glossiness/roughness.
+	string name;                    //The name of the material, which matches the corresponding texture associated with this material. This section is 44 bytes long.
 }
 
 //An index that forms a triangle.
 struct MDSIndex
 {
-	int32 Vertex;      				//The index of a vertex in the vertices list.
-	int32 Normal;      				//The index of a normal in the normals list.
-	int32 UV;          				//The index of a uv in the uvs list.
-	int32 Color;       				//The index of a color in the colors list.
+	int32 Vertex;      		//The index of a vertex in the vertices list.
+	int32 Normal;      		//The index of a normal in the normals list.
+	int32 UV;          		//The index of a uv in the uvs list.
+	int32 Color;       		//The index of a color in the colors list.
 }
 
 //A collection of indices that form a list of triangles.
 struct MDSTriangleStrip
 {
-	byte indexStyle;        		//The type of OpenGL primitive this strip represents. Values: GL_TRIANGLES(0x0003), GL_TRIANGLE_STRIP(0x0004), or DC2_COLLISION_TRIANGLES(0x13)     
-	byte indexType;          		//Determines what kind of data is stored in the indices. Values: VertexNormalUV(0x0), VertexNormalUVColor(0x1), VertexNormal(0x2), Vertex(0x3)      
+	byte indexStyle;        	//The type of OpenGL primitive this strip represents. Values: GL_TRIANGLES(0x0003), GL_TRIANGLE_STRIP(0x0004), or DC2_COLLISION_TRIANGLES(0x13)     
+	byte indexType;          	//Determines what kind of data is stored in the indices. Values: VertexNormalUV(0x0), VertexNormalUVColor(0x1), VertexNormal(0x2), Vertex(0x3)      
 	short16 padding;               	//Always zero, assumed padding.                   
 	int32 indexCount;              	//The number of indices in this strip.                                                             
 	int32 materialIndex;           	//The index into the material array.                                                                    
@@ -381,7 +378,7 @@ struct MDSMesh
 	int32 materialCount;           	//The number of 96-byte materials in material section.
 	int32 materialOffset;          	//The offset, starting at the beginning of the MDT header, where the material data starts.
 	Vector4[] vertices;          	//The positional vertex data.
-	MDSPolygon[] polygons;			//The triangle indices for this mesh.
+	MDSPolygon[] polygons;		//The triangle indices for this mesh.
 	Vector4[] normals;           	//The normal data.
 	Vector4[] uvs;               	//The uv texture coordinates.
 	Vector4[] colors;            	//The vertex color data.
@@ -390,16 +387,17 @@ struct MDSMesh
 
 struct MDSModel
 {
-    int32 header;            //The 0x4D445300 MDS0 header marker.
-    int32 version;           //The version number. Always 1.
-    int32 boneCount;         //The number of bones following the initial MDS header.
-    int32 boneOffset;        //The offset to the bone section. Also possibly the header size.
-    MDSBone[] Bones;            //A list of bones for the model's hierarchy.
-    MDSMesh[] Meshes;           //A list of meshes that contain the render data for the model.
-	//Optional:	MDSVertexWeight[] Weights;  //A list of vertex weights in a raw compressed form. They'll need to be propogated to the vertices in order to be used. See WGT specification.
-    //Optional: MDSAnimation[] Animations;  //A list of animations loaded from the motion file and split by the .cfg. See MOT specification.
+	int32 header;            	//The 0x4D445300 MDS0 header marker.
+	int32 version;           	//The version number. Always 1.
+	int32 boneCount;         	//The number of bones following the initial MDS header.
+	int32 boneOffset;        	//The offset to the bone section. Also possibly the header size.
+	MDSBone[] Bones;            	//A list of bones for the model's hierarchy.
+	MDSMesh[] Meshes;           	//A list of meshes that contain the render data for the model.
+	//MDSVertexWeight[] Weights;  //Optional: A list of vertex weights in a raw compressed form. They'll need to be propogated to the vertices in order to be used. See WGT specification.
+    	//MDSAnimation[] Animations;  //Optional: A list of animations loaded from the motion file and split by the .cfg. See MOT specification.
 }
-
+```
+```cs
 //Loads a mesh. See definition below.
 MDSMesh LoadMesh(reference InputStream input);
 
@@ -671,3 +669,4 @@ MDSMesh LoadMesh(reference InputStream input)
 	//Return the loaded mesh.
 	return tMesh;
 }
+```
