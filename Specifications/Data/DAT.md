@@ -1,4 +1,4 @@
-*------------------------------------------------------------------------------------------------*
+---------------
 
 File Specification:		Level-5 Data
 
@@ -12,15 +12,16 @@ Author Date:			2000
 
 Applications:			Dark Cloud 1, Dark Cloud 2
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
 Disclaimer:				This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-*------------------------------------------------------------------------------------------------*
-
-Purpose(expanded):		DAT files contain all of the assets used by both Dark Cloud and Dark Cloud 2.
+---------------
+Purpose(expanded):
+---------------
+	DAT files contain all of the assets used by both Dark Cloud and Dark Cloud 2.
 	These assets cover a wide range of types, such as 3d models, sound effects, textures, menus,
 	scripts, map information, etc. This information is packed into a singular non-compressed DAT
 	archive. This archive is generally found in the root directory of the game's iso.
@@ -38,10 +39,11 @@ Purpose(expanded):		DAT files contain all of the assets used by both Dark Cloud 
 	You only need one file system, either HD2 or HD3. I do not know why both file systems are
 	included with the DAT. They both contain identical data, in slightly different formats.
 
-*------------------------------------------------------------------------------------------------*
+---------------
 
 File Layout:
 ---------------------------
+```cs
 int32 == 4 byte integer
 string == char array with null terminator
 eof == end of file
@@ -51,13 +53,12 @@ DAT
 	byte[fileLength] data;
 	eof
 }
-
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
+```cs
 //The following code details how to extract files from the DAT using the HD2 file system.
-	
 
 //See HD2 spec for information about loading this struct.
 struct HD2FileEntry
@@ -67,8 +68,8 @@ struct HD2FileEntry
 	int32 unused2;			//unused padding.
 	int32 unused3;			//unused padding.
 	int32 position;			//the offset into the DAT file where the file begins.
-	int32 size;				//size of the file.
-	int32 blockPosition;	//Unused, the position of the data block (ISO aligned).
+	int32 size;			//size of the file.
+	int32 blockPosition;		//Unused, the position of the data block (ISO aligned).
 	int32 blockSize;		//Unused, The size of the block.
 	string name;			//The name of this file.
 }
@@ -91,7 +92,7 @@ void ExtractDAT(string szDATFilePath, string szHD2FilePath)
 	for(int file = 0; file < len(tEntries); file++)
 	{
 		//Generate an output path based on your preferences.
-		string szOutputPath = "Some\Output\Path\" + tEntries[file].name; 
+		string szOutputPath = "Some\Output\Path\" + tEntries[file].name;
 
 		//Create an output file.
 		OutputStream output = File.Create(szOutputPath);
@@ -113,8 +114,8 @@ void ExtractDAT(string szDATFilePath, string szHD2FilePath)
 	input.Close();
 }
 
-
----------------------------
+```
+```cs
 //The following code details how to extract files from the DAT using the HD3 file system.
 
 //The ISO Alignment of the HD3 file.
@@ -124,11 +125,11 @@ const long IsoAlignment = 0x800;
 //See HD3 spec for information about loading this struct.
 struct HD3FileEntry
 {
-    int32 nameOffset;		//the offset to the name of the file entry.
-    int32 size;				//the size of the file.
-    int32 blockPosition;	//the position of the data block (ISO aligned). Unlike HD2, this is actually used.
-    int32 blockSize;		//Unused, The size of the block.
-	string name;			//The name of the file.
+	int32 nameOffset;	//the offset to the name of the file entry.
+	int32 size;		//the size of the file.
+	int32 blockPosition;	//the position of the data block (ISO aligned). Unlike HD2, this is actually used.
+	int32 blockSize;	//Unused, The size of the block.
+	string name;		//The name of the file.
 }
 
 
@@ -149,7 +150,7 @@ void ExtractDAT(string szDATFilePath, string szHD3FilePath)
 	for(int file = 0; file < tEntries.Length; file++)
 	{
 		//Generate an output path based on your preferences.
-		string szOutputPath = "Some\Output\Path\" + tEntries[file].name; 
+		string szOutputPath = "Some\Output\Path\" + tEntries[file].name;
 
 		//Create an output file.
 		OutputStream output = File.Create(szOutputPath);
@@ -170,3 +171,4 @@ void ExtractDAT(string szDATFilePath, string szHD3FilePath)
 	//Close the input stream.
 	input.Close();
 }
+```
