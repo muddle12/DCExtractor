@@ -1,5 +1,5 @@
-*------------------------------------------------------------------------------------------------*
 File Specification:		Level-5 HD3
+------------------------------------------------------------------------------------------------
 
 Extension:			.hd3/.HD3
 
@@ -12,15 +12,16 @@ Author Date:			2000
 
 Applications:			Dark Cloud 1, Dark Cloud 2
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
 Disclaimer:				This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-*------------------------------------------------------------------------------------------------*
+------------------------------------------------------------------------------------------------
+Purpose(expanded):
 
-Purpose(expanded):		HD3 files contain the file system for indexing and retrieving files from the DAT archive.
+	HD3 files contain the file system for indexing and retrieving files from the DAT archive.
 	The file system contains a sequential list of file headers, which describe individual files and their locations and
 	sizes within the DAT. The DAT file cannot be extracted without a valid file system. The HD3 is generally found in
 	the root directory of the game's iso, next to the DAT archive.
@@ -28,8 +29,9 @@ Purpose(expanded):		HD3 files contain the file system for indexing and retrievin
 	HD3 describes version 3 of the file system. This is not to be confused with HD2, which is version 2. Both versions
 	should contain the same file system data, but are organized differently.
 	
-	All file headers have a fixed size of 16 bytes. They are arranged sequentially, starting at the beginning of the file system.
-	The file system ends upon encountering a file header with a size, blockposition, and blocksize that equal zero. 
+	All file headers have a fixed size of 16 bytes. They are arranged sequentially, starting at the beginning of the file 
+	system. The file system ends upon encountering a file header with a size, blockposition, and blocksize that 
+	equal zero. 
 	
 	Following the invalid file header is a list of all of the names of each file in the file system. Each file name is an ascii 
 	character string with a null terminator. These strings can vary in size. They will have file extensions and potentially 
@@ -41,11 +43,10 @@ Purpose(expanded):		HD3 files contain the file system for indexing and retrievin
 	
 	Unlike HD2, you will have to calculate the position of files in the DAT file using the blockposition multiplied by the 
 	ISOAlignment of the file. ISOAlignment is a constant integer value(0x800).
-	
-*------------------------------------------------------------------------------------------------*
 
 File Layout:
 ---------------------------
+```cs
 int32 == 4 byte integer
 string == char array with null terminator
 eof == end of file
@@ -68,12 +69,11 @@ HD3
 	...
 	eof
 }
-
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
-
+```cs
 //A file header within the HD3 file system.
 struct HD3FileEntry
 {
@@ -132,3 +132,4 @@ HD3FileEntry[] ReadHD3(string szHD3FilePath)
 	//Return the list as an array or whatever array type you prefer.
 	return tEntries.ToArray();
 }
+```
