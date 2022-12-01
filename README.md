@@ -153,13 +153,13 @@ using the Cancel (X) button in the bottom right hand corner of tool, on the righ
 ###### Debug
     This option is available to developers in debug mode. It contains useful functions for comparing files and generating metadata for debugging file formats. It is disabled in release builds, and can be safely ignored by the end user.
     
-Disclaimer:
+Disclaimer
 ----------------
 This tool is provided as is, with no warranty. It was created with the intent of sharing with the community all that I have learned while reverse-engineering these formats. This tool and its source code is provided freely, with the intent that others may use and build upon it.
 
 I will make no promises or bargains. I do not intend to support this codebase or repository. I will not be adding additions to the tool. I will not be improving the tool or continuing work on this project. I may address critical issues with the tool's functionality(show stopping bugs), but I will leave improvements to future developers that follow after me.
 
-Development:
+Development
 ----------------
 If you are a developer who wishes to continue work on this project, feel free to fork this repository. I will be locking the repository, mainly to preserve the integrity of the codebase. I will not be altering the base implementation. If I decide to return at some point, I'll fork a separate repository and continue from there (or maybe contribute to others if they exist). The only reasonable changes to the original codebase will be to address critical defects.
 
