@@ -74,6 +74,13 @@ DCExtractor is not a repacking tool, and cannot return these formats back to the
     Sound conversion (DCExtractor can extract sound archives to PS2 sound formats, but you'll need a different tool to read those)
     
     Any and all other proprietary data created by the developer for Dark Cloud 1/2 engine specific applications.
+    
+Requirements
+----------------
+This tool uses .NET Framework 4.6.1
+https://www.microsoft.com/en-us/download/details.aspx?id=49981
+
+This is also included with the executable.
 
 Usage
 ----------------
