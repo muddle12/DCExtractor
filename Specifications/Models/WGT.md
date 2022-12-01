@@ -73,19 +73,19 @@ WGT
 {
 	BoneHeader(32 bytes)
 	    	int32 meshBoneIndex;			//A reference to the bone that references the target mesh of the following weights.
-        	int32 boneIndex;				//The index of the bone the following weights are influenced by.
-        	int32 Unknown2;					//Unknown.
-        	int32 headerSize;				//The size of this header, always 32.
-        	int32 weightCount;				//The number of weights following this header.
+        	int32 boneIndex;			//The index of the bone the following weights are influenced by.
+        	int32 Unknown2;				//Unknown.
+        	int32 headerSize;			//The size of this header, always 32.
+        	int32 weightCount;			//The number of weights following this header.
         	int32 nextHeaderOffset;			//The offset, from the beginning of the header, to the next BoneHeader.
-        	int32 headerMagic1;				//A magic value.
-        	int32 headerMagic2;				//A magic value.
-		VertexWeight(32 bytes)[weightCount]		//The list of weights for this bone.
-			int32 vertexIndex;         	//The index of the vertex into the weight list this weight applies to.
-			int32 Unknown1;            	//The 6 unknowns in this sequence are always 0. There's a lot of empty space here for some reason. Likely the 32-byte alignment.
+        	int32 headerMagic1;			//A magic value.
+        	int32 headerMagic2;			//A magic value.
+		VertexWeight(32 bytes)[weightCount]	//The list of weights for this bone.
+			int32 vertexIndex;         		//The index of the vertex into the weight list this weight applies to.
+			int32 Unknown1;            		//The 6 unknowns in this sequence are always 0. There's a lot of empty space here for some reason. Likely the 32-byte alignment.
 			int32 Unknown2;
 			int32 Unknown3;
-			float32 vertexWeight;      	//The weight value, stored as a value between 0f-100f. It's a strange way to store a weight (you could use 0.0f-1.0f, or you know, a byte(0-255)), but whatever.
+			float32 vertexWeight;      		//The weight value, stored as a value between 0f-100f. It's a strange way to store a weight (you could use 0.0f-1.0f, or you know, a byte(0-255)), but whatever.
 			int32 Unknown4;
 			int32 Unknown5;
 			int32 Unknown6;
