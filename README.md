@@ -1,6 +1,8 @@
 # DCExtractor
 DCExtractor is a tool designed to unpack and convert many of the files and formats used by several of the Level-5 PS2-era video games, specifically targeting Dark Cloud 1 and Dark Cloud 2. It is the culmination of all of the previous efforts over the course of decades to reverse engineer these games, all handily rolled into one package.
 
+![image](https://user-images.githubusercontent.com/119532101/205130734-21fb455a-0e0a-4e17-b8f1-f485168daa7d.png)
+
 Features
 ----------------
 DCExtractor is an all in one suite of extraction and conversion tools that are capable of converting 90% of the file types found within the Dark Cloud 1/2 .DAT archives, including the .DAT archive. It can read many of the formats for Dark Cloud 1/2, and can convert certain types of data to other friendlier formats for external use. Model data can be converted to Wavefront OBJ or Studiomdl SMD. Image formats can be converted to PNG.
