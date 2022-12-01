@@ -37,16 +37,16 @@ Purpose(expanded):
 	and so on. This continues until an invalid header is reached, or end of file. Invalid Headers have all of their 
 	variables set to zero.
 	
-	All file headers have a fixed size 80 bytes. The first 64 bytes of the header is reserved for the file's name, sometimes 
+	All file headers have a fixed size of 80 bytes. The first 64 bytes of the header are reserved for the file's name, sometimes 
 	represented as an absolute path based on the original developer's file system. This name is null-terminated, and can 
 	contain garbage characters after the null terminator.
 	
 	The rest of the header is three 4-byte integers describing the fileLength in bytes, endOffset in bytes into the file, 
 	and the "type" of file. The type parameter is currently unknown, but does not appear to be necessary for extracting the 
-	file's from the PAK archive.
+	files from the PAK archive.
 
 	The file header's file name may contain absolute file paths, invalid drive letters, illegal OS characters, and no 
-	file extensions. The name needs to be sanitized before it can be used. Otherwise, depending on which OS you are using, 
+	file extensions. This file name needs to be sanitized before it can be used. Otherwise, depending on which OS you are using, 
 	this could cause errors or exceptions when parsing PAK archives.
 
 File Layout:
