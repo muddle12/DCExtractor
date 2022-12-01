@@ -135,14 +135,14 @@ MOT
 		int32 Unknown2;                //appears to be unused.
 		int32 Unknown3;                //appears to be unused.
 		MOTKeyFrame(32 bytes)[keyframeCount] keyFrames;
-			int32 frameIndex;				//The index of this keyframe.
-			int32 padding1;					//Padding.
-			int32 padding2;					//Padding.
-			int32 padding3;					//Padding.
-			float32 x;						//x-component.
-			float32 y;						//y-component.
-			float32 z;						//z-component.
-			float32 w;						//w-component.
+			int32 frameIndex;		//The index of this keyframe.
+			int32 padding1;			//Padding.
+			int32 padding2;			//Padding.
+			int32 padding3;			//Padding.
+			float32 x;			//x-component.
+			float32 y;			//y-component.
+			float32 z;			//z-component.
+			float32 w;			//w-component.
 	MOTChannel(32 bytes)
 	MOTChannel(32 bytes)
 	...
@@ -157,14 +157,14 @@ Implementation(pseudocode):
 //Contains transformation data for bone animaton.
 struct MOTKeyframe
 {
-	int32 frameIndex;				//The index of this keyframe.
-	int32 padding1;					//Padding.
-	int32 padding2;					//Padding.
-	int32 padding3;					//Padding.
-	float32 x;						//x-component.
-	float32 y;						//y-component.
-	float32 z;						//z-component.
-	float32 w;						//w-component.
+	int32 frameIndex;		//The index of this keyframe.
+	int32 padding1;			//Padding.
+	int32 padding2;			//Padding.
+	int32 padding3;			//Padding.
+	float32 x;			//x-component.
+	float32 y;			//y-component.
+	float32 z;			//z-component.
+	float32 w;			//w-component.
 }
 
 //Contains a list of keyframes for a single bone.
@@ -178,7 +178,7 @@ struct MOTChannel
 	int32 animationByteSize;       	//Unknown.
 	int32 Unknown2;                	//appears to be unused.
 	int32 Unknown3;                	//appears to be unused.
-	MOTKeyframe[] keyFrames;		//The keyframes for this channel.
+	MOTKeyframe[] keyFrames;	//The keyframes for this channel.
 }
 
 //Contains a list of animations for a hierarchy of bones.
