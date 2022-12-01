@@ -1,6 +1,5 @@
-*------------------------------------------------------------------------------------------------*
-
 File Specification:		Level-5 Motion Animation
+------------------------------------------------------------------------------------------------
 
 Extension:			.mot/.MOT
 
@@ -12,18 +11,20 @@ Author Date:			2000
 
 Applications:			Dark Cloud 1, Dark Cloud 2
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
 Disclaimer:				This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-*------------------------------------------------------------------------------------------------*
+Purpose(expanded):
+------------------------------------------------------------------------------------------------
 
-Purpose(expanded):		This is a child format of the MDS format. If you are unfamiliar with the MDS format, I would 
+	This is a child format of the MDS format. If you are unfamiliar with the MDS format, I would 
 	recommend reading the MDS specification first before reading the MOT specification.
 	
-	The MOT is a separate file that accompanies the MDS file. This file requires an associated MDS file in order to be used.
+	The MOT is a separate file that accompanies the MDS file. This file requires an associated MDS file in order 
+	to be used.
 	
 	
 	The MOT format is a container for animations. Animations are a series of individual
@@ -114,10 +115,9 @@ Purpose(expanded):		This is a child format of the MDS format. If you are unfamil
 	I am not certain that this format is correct. Anyone else following up on this specification may have to 
 	revise MOT's specification once the BBP format is better understood.
 
-*------------------------------------------------------------------------------------------------*
-
 File Layout:
 ---------------------------
+```cs
 int32 == 4 byte integer
 float32 == 4 byte floating point single
 string == char array with null terminator
@@ -149,12 +149,11 @@ MOT
 	MOTChannel(32 bytes)
 	eof
 }
-
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
-
+```cs
 //Contains transformation data for bone animaton.
 struct MOTKeyframe
 {
@@ -245,10 +244,10 @@ MOTAnimation LoadMOT(string szMOTFilePath)
 	//Return our master animation.
 	return tAnimation;
 }
-
+```
 Animation Slicing with CFG
 ---------------------------
-
+```cs
 //Contains the parsed slice information from the CFG.
 struct CFGAnimationSlice
 {
@@ -351,3 +350,4 @@ MOTAnimation[] SliceMOT(string szCFGFilePath, const reference MOTAnimation tMast
 	//Return our slices.
 	return tSlicedAnimations;
 }
+```
