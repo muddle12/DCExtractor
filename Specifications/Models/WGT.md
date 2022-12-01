@@ -1,6 +1,5 @@
-*------------------------------------------------------------------------------------------------*
-
 File Specification:		Level-5 Vertex Weights
+------------------------------------------------------------------------------------------------
 
 Extension:			.wgt/.WGT
 
@@ -12,23 +11,23 @@ Author Date:			2000
 
 Applications:			Dark Cloud 1, Dark Cloud 2
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
 Disclaimer:				This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-*------------------------------------------------------------------------------------------------*
-
-Purpose(expanded):		This is a child format of the MDS format. If you are unfamiliar with the MDS format, I would 
+Purpose(expanded):
+------------------------------------------------------------------------------------------------
+	This is a child format of the MDS format. If you are unfamiliar with the MDS format, I would 
 	recommend reading the MDS specification first before reading the WGT specification.
 	
 	The WGT is a separate file that accompanies the MDS file. This file requires an associated MDS file in order to be used.
 	
 	
 	The WGT format is a container for vertex weights. Weights are used by a skeletal mesh skinning system. Mesh skinning is the
-	process of transforming vertices around a local skeletal bone, often called a joint. The "weights" are influence values that govern
-	how much a vertex should move with respect to its associated bone. Multiple weights can be applied to the same
+	process of transforming vertices around a local skeletal bone, often called a joint. The "weights" are influence values 
+	that govern how much a vertex should move with respect to its associated bone. Multiple weights can be applied to the same
 	vertex, allowing meshes to bend, stretch, and compress around the skeletal hierarchy, giving the impression that
 	that the polygons are "skin" affixed to a skeletal structure. More details about mesh skinng will not be elaborated on in 
 	this specification. I would advise researching this topic if you are not familiar with the terminology.
@@ -41,16 +40,18 @@ Purpose(expanded):		This is a child format of the MDS format. If you are unfamil
 	
 	The BoneHeader describes which bone the following weights will be influenced by. It contains eight 4-byte integers. 
 	
-	The first integer is the meshBoneIndex, which points to a specific mesh, using a specific bone's associatedMDTOffset. In simplier
-	terms, meshBoneIndex is the index of a bone, which has an associatedMDTOffset, which points to a specific mesh, which the
-	following weights will target. It's basically a daisy-chain to get to a mesh. Vertex weights are not global to the MDS, but 
-	rather local to specific MDTMeshes in the file. A set of weights for a BoneHeader will only target one specific mesh at a time.
+	The first integer is the meshBoneIndex, which points to a specific mesh, using a specific bone's associatedMDTOffset. In 
+	simplier terms, meshBoneIndex is the index of a bone, which has an associatedMDTOffset, which points to a specific mesh, 
+	which the following weights will target. It's basically a daisy-chain to get to a mesh. Vertex weights are not global to 
+	the MDS, but rather local to specific MDTMeshes in the file. A set of weights for a BoneHeader will only target one 
+	specific mesh at a time.
 	
-	The second integer is the boneIndex, which is the index of the bone in the MDS skeletal hierarchy that the weights will be influenced by.
-	The third integer is padding. The fourth integer is the headerSize, which is always 32 bytes. The fifth integer is the
-	weightCount, or the number of weights following this BoneHeader. The sixth integer is the nextHeaderOffset, which is the offset,
-	starting at the beginning of this BoneHeader, to the next BoneHeader. This allows you to skip the vertex weights for a
-	BoneHeader, though I'm not sure why one would do that. The final two integers are magic values, 0xACE63701 and 0xB0F0FC77.
+	The second integer is the boneIndex, which is the index of the bone in the MDS skeletal hierarchy that the weights will 
+	be influenced by. The third integer is padding. The fourth integer is the headerSize, which is always 32 bytes. The fifth 
+	integer is the weightCount, or the number of weights following this BoneHeader. The sixth integer is the nextHeaderOffset, 
+	which is the offset, starting at the beginning of this BoneHeader, to the next BoneHeader. This allows you to skip the 
+	vertex weights for a BoneHeader, though I'm not sure why one would do that. The final two integers are magic values, 
+	0xACE63701 and 0xB0F0FC77.
 	
 	
 	After the BoneHeader, if weightCount is not zero, will be an array of VertexWeights of weightCount in length. Each
@@ -60,11 +61,10 @@ Purpose(expanded):		This is a child format of the MDS format. If you are unfamil
 	assumed that 100.0f == 1.0f, or 50.0f == 0.5f. It is unknown why these values are stored in numerals rather than fractions.
 	Finally, the last 12 bytes are padding. After the following VertexWeights of weightCount in number, begins another 
 	BoneHeader or end of file.
-	
-*------------------------------------------------------------------------------------------------*
 
 File Layout:
 ---------------------------
+```cs
 int32 == 4 byte integer
 float32 == 4 byte floating point single
 eof == end of file
@@ -72,14 +72,14 @@ eof == end of file
 WGT
 {
 	BoneHeader(32 bytes)
-	    int32 meshBoneIndex;			//A reference to the bone that references the target mesh of the following weights.
-        int32 boneIndex;				//The index of the bone the following weights are influenced by.
-        int32 Unknown2;					//Unknown.
-        int32 headerSize;				//The size of this header, always 32.
-        int32 weightCount;				//The number of weights following this header.
-        int32 nextHeaderOffset;			//The offset, from the beginning of the header, to the next BoneHeader.
-        int32 headerMagic1;				//A magic value.
-        int32 headerMagic2;				//A magic value.
+	    	int32 meshBoneIndex;			//A reference to the bone that references the target mesh of the following weights.
+        	int32 boneIndex;				//The index of the bone the following weights are influenced by.
+        	int32 Unknown2;					//Unknown.
+        	int32 headerSize;				//The size of this header, always 32.
+        	int32 weightCount;				//The number of weights following this header.
+        	int32 nextHeaderOffset;			//The offset, from the beginning of the header, to the next BoneHeader.
+        	int32 headerMagic1;				//A magic value.
+        	int32 headerMagic2;				//A magic value.
 		VertexWeight(32 bytes)[weightCount]		//The list of weights for this bone.
 			int32 vertexIndex;         	//The index of the vertex into the weight list this weight applies to.
 			int32 Unknown1;            	//The 6 unknowns in this sequence are always 0. There's a lot of empty space here for some reason. Likely the 32-byte alignment.
@@ -95,12 +95,11 @@ WGT
 	BoneHeader(32 bytes)
 	eof
 }
-
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
-
+```cs
 //A weight upon a vertex.
 struct WGTVertexWeight
 {
@@ -198,3 +197,4 @@ WGTSkin LoadWGT(string szWGTFilePath)
 	//Return the skin.
 	return tSkin;
 }
+```
