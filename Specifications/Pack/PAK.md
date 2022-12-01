@@ -1,14 +1,16 @@
-*------------------------------------------------------------------------------------------------*
 File Specification:		Level-5 Package
+------------------------------------------------------------------------------------------------
 
-Extension(s):			.pak/.PAK	(default)
-						.chr/.CHR	(Character Data)
-						.ipk/.IPK	(Image Data)
-						.mpk/.MPK	(Model Data)
-						.pcp/.PCP	(Unknown, Map Data?)
-						.efp/.EFP	(Effect Data)
-						.snd/.SND	(Sound Effect/Music Data)
-						.sky/.SKY	(Skybox Model Data)
+Extension(s):			
+
+	.pak/.PAK	(default)
+	.chr/.CHR	(Character Data)
+	.ipk/.IPK	(Image Data)
+	.mpk/.MPK	(Model Data)
+	.pcp/.PCP	(Unknown, Map Data?)
+	.efp/.EFP	(Effect Data)
+	.snd/.SND	(Sound Effect/Music Data)
+	.sky/.SKY	(Skybox Model Data)
 
 Purpose:			a generic non-compressed archive of similar data.
 
@@ -18,38 +20,38 @@ Author Date:			2000
 
 Applications:			Dark Cloud 1, Dark Cloud 2
 
-Spec Author:			muddle
+Spec Author:			muddle12
 
 Disclaimer:				This format is speculative. Only the original author knows the exact specification.
 	This information was derived through reverse engineering and experimentation. Information may be incorrect or	
 	incomplete.
 
-*------------------------------------------------------------------------------------------------*
-
-Purpose(expanded):		PAK archives contain non-compressed files packed together in series. Usually, PAK archives group together
-	files that relate to each other. For example, models, animations, and textures could be packaged together, usually per game object or
-	character. 
+Purpose(expanded):
+------------------------------------------------------------------------------------------------
+	PAK archives contain non-compressed files packed together in series. Usually, PAK archives group together
+	files that relate to each other. For example, models, animations, and textures could be packaged together, usually per game 
+	object or character. 
 	
-	Unlike the DAT/HD2/HD3 file system, each file has a header before the file data, describing the file that follows. Each PAK archive
-	begins with a file header, followed by its associated data, followed by another header, and its data, and so on. This continues 
-	until an invalid header is reached, or end of file. Invalid Headers have all of their variables set to zero.
+	Unlike the DAT/HD2/HD3 file system, each file has a header before the file data, describing the file that follows. 
+	Each PAK archive begins with a file header, followed by its associated data, followed by another header, and its data,
+	and so on. This continues until an invalid header is reached, or end of file. Invalid Headers have all of their 
+	variables set to zero.
 	
-	All file headers have a fixed size 80 bytes. The first 64 bytes of the header is reserved for the file's name, sometimes represented
-	as an absolute path based on the original developer's file system. This name is null-terminated, and can contain garbage characters
-	after the null terminator.
+	All file headers have a fixed size 80 bytes. The first 64 bytes of the header is reserved for the file's name, sometimes 
+	represented as an absolute path based on the original developer's file system. This name is null-terminated, and can 
+	contain garbage characters after the null terminator.
 	
-	The rest of the header is three 4-byte integers describing the fileLength in bytes, endOffset in bytes into the file, and the 
-	"type" of file. The type parameter is currently unknown, but does not appear to be necessary for extracting the file's from the
-	PAK archive.
+	The rest of the header is three 4-byte integers describing the fileLength in bytes, endOffset in bytes into the file, 
+	and the "type" of file. The type parameter is currently unknown, but does not appear to be necessary for extracting the 
+	file's from the PAK archive.
 
-	The file header's file name may contain absolute file paths, invalid drive letters, illegal OS characters, and no file extensions. 
-	The name needs to be sanitized before it can be used. Otherwise, depending on which OS you are using, this could cause errors or
-	exceptions when parsing PAK archives.
-
-*------------------------------------------------------------------------------------------------*
+	The file header's file name may contain absolute file paths, invalid drive letters, illegal OS characters, and no 
+	file extensions. The name needs to be sanitized before it can be used. Otherwise, depending on which OS you are using, 
+	this could cause errors or exceptions when parsing PAK archives.
 
 File Layout:
 ---------------------------
+```cs
 int32 == 4 byte integer
 char == 1 byte ASCII character
 long64 = 8 byte integer
@@ -73,12 +75,11 @@ PAK
 	FileHeader(80 bytes) //Invalid header: headerSize == 0, fileLength == 0, endOffset == 0, type == 0
 	eof
 }
-
-*------------------------------------------------------------------------------------------------*
+```
 
 Implementation(pseudocode):
 ---------------------------
-
+```cs
 //A file header for a PAK file.
 struct PAKFileHeader
 {
@@ -142,3 +143,4 @@ void ExtractPAK(string szPAKFilePath)
 	//Close the input stream.
 	input.Close();
 }
+```
