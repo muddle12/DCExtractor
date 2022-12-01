@@ -138,7 +138,7 @@ void TransformMeshVerticesByBindMatrix(reference Vector4[] vertices, Matrix4x4 b
 	Vector4 transformedVert;
 
 	//Transform the vertices by the transform passed, moving it to a new position in 3d space.
-    for (int vert = 0; vert < vertices.Length; vert++)
+    	for (int vert = 0; vert < vertices.Length; vert++)
 	{
 		//Perform a vector4 by matrix4x4 multiplication.	 
 		transformedVert.x = vertices[vert].x * bindMatrix.m[0] + vertices[vert].y * bindMatrix.m[4] + vertices[vert].z * bindMatrix.m[8] + vertices[vert].w * bindMatrix.m[12];
