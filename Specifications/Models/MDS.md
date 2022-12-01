@@ -55,7 +55,7 @@ Purpose(expanded):
 	And yes, my naming scheme is a bit confusing. It's the result of interative reverse engineering.
 	
 	Materials are the other data type, which contain a texture name and miscellaneous color data. 
-	I will go into detail about the structure of materials below.
+	I will go into detail about the structure of materials in a later part of the specification.
 	
 	
 	The MDS file is denoted by the magic value MDS0(0x4D445300). It begins with the MDSHeader, which contains 
